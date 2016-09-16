@@ -1,0 +1,212 @@
+TERM=xterm
+export TERM
+
+alias psg="ps aux| grep -v grep | grep"
+alias inst="sudo apt-get install"
+alias notify="mailx -A gmail -s "
+alias monitor-sensors="echo \"Repeats sensors every 10 seconds\"; while (true); do echo \" \"; sensors; sleep 10s; done;"
+alias monitor-cpuseed="echo \"Repeats cpuspeed every 10 seconds\"; while (true); do echo \" \"; grep MHz /proc/cpuinfo; sleep 10s; done;"
+alias clc="clear"
+alias xit="exit"
+alias up="cd .."
+alias upp="cd ../.."
+alias rmi="rm -i"
+alias calc="sh /home/aman/Software/my_scripts/bashcalc.sh"
+alias ks="echo \"Assuming ks is a typo for ls\"; ls"
+alias cpuspeed="grep MHz /proc/cpuinfo"
+#alias diskspace="df -h | grep --color=never -E \"dev/s|Used\""
+#alias tvim="vim -p"
+
+alias startCloudPrinter="/opt/google/chrome/chrome  --type=service -enable-cloud-print-proxy --no-service-autorun --noerrdialogs --user-data-dir=`pwd` --enable-logging --v=1"
+alias whatsmyip="/home/swati/Software/my_scripts/my_dns_scripts/checkIP.sh"
+
+alias b-S="byobu -S"
+alias byobu-dr="byobu -dr"
+alias b-dr="byobu -dr"
+alias b-l="byobu -list"
+ 
+## alias leastoccupied="cat ~/tmp/parallel/sorted-results.txt | head -n 5 "
+##
+## function leastoccupied {
+##     if [ $# -ne 0 ]; then
+##         cat ~/tmp/parallel/sorted-results.txt | head -n $1
+##     else
+##         cat ~/tmp/parallel/sorted-results.txt | head -n 20
+##     fi
+## }
+##
+## alias loadcheck="echo Checking loads on simulations servers... ; ~/tmp/parallel/loadcheck.sh; leastoccupied 20"
+## alias laodcheck="echo -e '\E[37;44m'\"\033[1mAssuming typo for loadcheck\033[0m\"; loadcheck"
+## function emptyservers {
+##     ~/tmp/parallel/loadcheck.sh;
+##     if [ $# -ne 0 ]; then
+##         NUMSERVERS=$1
+##     else
+##         NUMSERVERS=20
+##     fi
+##     leastoccupied | grep -v n1185 | head -n ${NUMSERVERS} | awk 'BEGIN{printedservers=0}  { if (int($3)+1 < $4) { if (printedservers>0) {printf ","}  printf $4-int($3)-1 "/" $2 ; printedservers+=1;  } } END{printf "\n" }'
+## }
+## function emptyservers-old-results {
+##     #~/tmp/parallel/loadcheck.sh;
+##     if [ $# -ne 0 ]; then
+##         NUMSERVERS=$1
+##     else
+##         NUMSERVERS=20
+##     fi
+##     leastoccupied | grep -v n1185 | head -n ${NUMSERVERS} | awk 'BEGIN{printedservers=0}  { if (int($3)+1 < $4) { if (printedservers>0) {printf ","}  printf $4-int($3)-1 "/" $2 ; printedservers+=1;  } } END{printf "\n" }'
+## }
+## alias sss="ssh -t `leastoccupied | grep -v n1185 | head -n 1 | awk '{ if ($1 < 0.8) { print $2 } }'` \"cd code/tpc/simulation; bash\""
+## function sss {
+##     leastoccupied | grep -v n1185 | head -n 1 | awk '{ print $0; if ($1 > 0.8) { print "Warning! Heavy load on servers!" } }'
+##     WD=`pwd`;
+##     ssh -t `leastoccupied | grep -v n1185 | head -n 1 | awk '{ print $2 }'` "cd  ${WD}; bash "
+## }
+
+alias gti="echo -e '\E[37;44m'\"\033[1mAssuming gti is a typo for git\033[0m\"; git"
+
+function diskspace {
+    echo -e "\E[3m                 Total  Used    Free    Used%   Mount                \033[0m"
+    df -h /home                 \
+            | tail -n 1         \
+            | awk -v RED="\\033[0;31m" -v WHITE="\\033[0;37m" \
+            '{ gsub(/^[ \t]+/, "");
+             gsub(/[ ]+/, "\t");
+             percent=$4;  gsub("%", "", percent);
+             if (percent > 69) {COLOR=RED;} else {COLOR=WHITE;}
+             print COLOR "Home              " $0}'
+    df -h /dev/sda2             \
+            | tail -n 1         \
+            | awk -v RED="\\033[0;31m" -v WHITE="\\033[0;37m" \
+            '{ gsub(/^[ \t]+/, "");
+             gsub(/[ ]+/, "\t");
+             percent=$4;  gsub("%", "", percent);
+             if (percent > 69) {COLOR=RED;} else {COLOR=WHITE;}
+             print COLOR "Project           " $0}'
+    #df -h | grep `whoami`
+    #df -h | grep -v Filesystem | grep system
+}
+
+function shorthostname {
+    #SHORTHOSTNAME=`hostname | awk '{ gsub("\\\\."," "); print $1 }'`
+    #if [ $# -ne 0 ]; then
+    #    echo $HOSTNAME
+    #fi
+    #echo $SHORTHOSTNAME
+    echo "glowblue"
+}
+
+alias timestamp="date +%Y%m%dT%H%M%S"
+alias timestamp-sys="date +%s"
+alias timestamp-human="date"
+
+alias banner="figlet"
+#if [ `hostname` == "n1188.scca.linkamedia.com" ]; then
+#    echo Changing TEMP;
+#    TMPDIR="/home/abhatia/tempdir"
+#    TEMP=$TMPDIR
+#    TMP=$TMPDIR
+#    export TMPDIR TEMP TMP
+#fi
+alias tvim="vim -p"
+alias view="vim -R"
+
+
+HISTFILESIZE=100000000
+HISTSIZE=100000
+
+
+# Colors from git-aware-prompt
+# Storing these color codes for later use
+txtblk='\033[0;30m' # Black - Regular
+txtred='\033[0;31m' # Red
+txtgrn='\033[0;32m' # Green
+txtylw='\033[0;33m' # Yellow
+txtblu='\033[0;34m' # Blue
+txtpur='\033[0;35m' # Purple
+txtcyn='\033[0;36m' # Cyan
+bldblk='\033[1;30m' # Black - Bold
+bldred='\033[1;31m' # Red
+bldgrn='\033[1;32m' # Green
+bldylw='\033[1;33m' # Yellow
+bldblu='\033[1;34m' # Blue
+bldpur='\033[1;35m' # Purple
+bldcyn='\033[1;36m' # Cyan
+
+
+
+# Added by Aman on 21st Oct to change CLI
+function prompt
+{
+local WHITE="\[\033[1;37m\]"
+local GREEN="\[\033[0;32m\]"
+local CYAN="\[\033[0;36m\]"
+local GRAY="\[\033[0;37m\]"
+local BLUE="\[\033[0;34m\]"
+HCOLOR=$bldpur
+PCOLOR=${GRAY}
+UCOLOR=$bldgrn
+export PS1="
+
+${GRAY}[${HCOLOR}\h ${CYAN}\@${GRAY}] ${UCOLOR}\u${CYAN} \w \[$bldred\]\$git_branch${GRAY}
+${PCOLOR}\$ ${GRAY}"
+#${GREEN}\u${CYAN}@${GREEN}\h ${CYAN}\w${BLUE}
+#${WHITE}$ ${WHITE}"
+}
+prompt
+
+
+#clear
+hostname
+echo
+echo -ne "Today is "; date
+uptime 
+
+
+# Choose Random number between 0 and 4
+let "rnum = $RANDOM % 5";
+
+case "$rnum" in
+0)  cowsaystr="bud-frogs"
+    ;;
+1)  cowsaystr="default"
+    ;;
+2)  cowsaystr="sheep"
+    ;;
+3)  cowsaystr="snowman"
+    ;;
+4)  cowsaystr="elephant"
+    ;;
+5)  cowsaystr="milk"
+    ;;
+esac
+
+/usr/games/fortune | /usr/games/cowsay -n -f $cowsaystr
+echo
+
+
+
+EDITOR=vim
+
+stty erase '^?'
+
+alias banner="figlet"
+
+function reloadTweaks {
+    source ~/.TerminalTweaks
+}
+
+function reloadBashrc {
+    source ~/.bashrc
+}
+
+# Force tmux to assume that the shell is using 256 color terminal
+alias tmux="tmux -2"
+
+
+alias rndstring="base64 /dev/urandom | tr -d '/+' | dd bs=32 count=1 2>/dev/null"
+
+# Shutup perl errors when connecting from Mac OS X using ssh
+export LANGUAGE="en"
+export LANG="C"
+export LC_MESSAGES="C"
+export LC_ALL="C"

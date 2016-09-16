@@ -198,7 +198,7 @@ function! s:buflist()
 endfunction
 
 function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+  execute 'sbuffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
 nnoremap <silent> <Leader><Enter> :call fzf#run({
@@ -216,6 +216,12 @@ command! FZFMru call fzf#run({
 \  'down':    '40%'})
 
 
+"""" Re-use tab when switching to another buffer
+" From http://vim.wikia.com/wiki/Using_tab_pages
+set switchbuf=usetab,newtab
+" Doesn't seem to work with bufopen and buffer
+" Works with sbuffer - See
+" http://stackoverflow.com/questions/28392784/vim-drop-for-buffer-jump-to-window-if-buffer-is-already-open-with-tab-autoco
 
 """"" More natural splits
 set splitbelow

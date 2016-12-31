@@ -121,3 +121,6 @@ fi
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# added by Miniconda3 4.1.11 installer
+export PATH="/home/swati/Software/miniconda/miniconda3/bin:$PATH"

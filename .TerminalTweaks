@@ -16,6 +16,7 @@ alias ks="echo \"Assuming ks is a typo for ls\"; ls"
 alias cpuspeed="grep MHz /proc/cpuinfo"
 #alias diskspace="df -h | grep --color=never -E \"dev/s|Used\""
 #alias tvim="vim -p"
+alias ipy="ipython"
 
 alias startCloudPrinter="/opt/google/chrome/chrome  --type=service -enable-cloud-print-proxy --no-service-autorun --noerrdialogs --user-data-dir=`pwd` --enable-logging --v=1"
 alias whatsmyip="/home/swati/Software/my_scripts/my_dns_scripts/checkIP.sh"
@@ -24,7 +25,7 @@ alias b-S="byobu -S"
 alias byobu-dr="byobu -dr"
 alias b-dr="byobu -dr"
 alias b-l="byobu -list"
- 
+
 ## alias leastoccupied="cat ~/tmp/parallel/sorted-results.txt | head -n 5 "
 ##
 ## function leastoccupied {
@@ -65,7 +66,7 @@ alias b-l="byobu -list"
 alias gti="echo -e '\E[37;44m'\"\033[1mAssuming gti is a typo for git\033[0m\"; git"
 
 function diskspace {
-    echo -e "\E[3m                 Total  Used    Free    Used%   Mount                \033[0m"
+    echo -e "                       \E[3m Total \033[0m \E[3m Used \033[0m  \E[3m Free \033[0m \E[3m Used% \033[0m \E[3m Mount \033[0m      "
     df -h /home                 \
             | tail -n 1         \
             | awk -v RED="\\033[0;31m" -v WHITE="\\033[0;37m" \
@@ -73,15 +74,15 @@ function diskspace {
              gsub(/[ ]+/, "\t");
              percent=$4;  gsub("%", "", percent);
              if (percent > 69) {COLOR=RED;} else {COLOR=WHITE;}
-             print COLOR "Home              " $0}'
-    df -h /dev/sda2             \
+             print COLOR "Home      " $0}'
+    df -h /srv                  \
             | tail -n 1         \
             | awk -v RED="\\033[0;31m" -v WHITE="\\033[0;37m" \
             '{ gsub(/^[ \t]+/, "");
              gsub(/[ ]+/, "\t");
              percent=$4;  gsub("%", "", percent);
              if (percent > 69) {COLOR=RED;} else {COLOR=WHITE;}
-             print COLOR "Project           " $0}'
+             print COLOR "Server    " $0}'
     #df -h | grep `whoami`
     #df -h | grep -v Filesystem | grep system
 }
@@ -133,6 +134,9 @@ bldpur='\033[1;35m' # Purple
 bldcyn='\033[1;36m' # Cyan
 
 
+# Add git-aware prompt
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source "${GITAWAREPROMPT}/main.sh"
 
 # Added by Aman on 21st Oct to change CLI
 function prompt
@@ -142,12 +146,12 @@ local GREEN="\[\033[0;32m\]"
 local CYAN="\[\033[0;36m\]"
 local GRAY="\[\033[0;37m\]"
 local BLUE="\[\033[0;34m\]"
-HCOLOR=$bldpur
+HCOLOR=$txtpur
 PCOLOR=${GRAY}
 UCOLOR=$bldgrn
 export PS1="
 
-${GRAY}[${HCOLOR}\h ${CYAN}\@${GRAY}] ${UCOLOR}\u${CYAN} \w \[$bldred\]\$git_branch${GRAY}
+${GRAY}[${HCOLOR}\h ${CYAN}\@${GRAY}] ${UCOLOR}\u${CYAN} \w \[$txtred\]\$git_branch${GRAY}
 ${PCOLOR}\$ ${GRAY}"
 #${GREEN}\u${CYAN}@${GREEN}\h ${CYAN}\w${BLUE}
 #${WHITE}$ ${WHITE}"
@@ -159,7 +163,7 @@ prompt
 hostname
 echo
 echo -ne "Today is "; date
-uptime 
+uptime
 
 
 # Choose Random number between 0 and 4
@@ -202,6 +206,10 @@ function reloadBashrc {
 # Force tmux to assume that the shell is using 256 color terminal
 alias tmux="tmux -2"
 
+if [ -f ~/Software/tmux-bash-completion/tmux ]; then
+    source ~/Software/tmux-bash-completion/tmux
+fi
+
 
 alias rndstring="base64 /dev/urandom | tr -d '/+' | dd bs=32 count=1 2>/dev/null"
 
@@ -210,3 +218,9 @@ export LANGUAGE="en"
 export LANG="C"
 export LC_MESSAGES="C"
 export LC_ALL="C"
+
+# Add config_files to path
+export PATH="/home/swati/Software/config_files/git/:$PATH"
+
+# Needed for shapely package for Kaggle DSTL contest
+export QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb

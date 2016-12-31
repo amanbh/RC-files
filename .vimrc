@@ -20,6 +20,35 @@ Plugin 'peaksea'
 " Plugin 'Syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-obsession'
+Plugin 'dhruvasagar/vim-prosession'
+Plugin 'vimwiki/vimwiki.git'
+let g:vimwiki_list = [{
+  \ 'path': '~/Documents/Aman/Study/wiki/vimwiki',
+  \ 'template_path': '~/Documents/Aman/Study/wiki/vimwiki/templates',
+  \ 'template_default': 'default',
+  \ 'template_ext': '.html',
+  \ 'auto_toc': 1,
+  \ 'auto_export': 1}]
+" ''
+let g:vimwiki_use_mouse = 1
+let g:vimwiki_hl_headers = 0
+
+Plugin 'EinfachToll/DidYouMean'
+
+" Tagbar support for Vimwiki
+" See https://raw.githubusercontent.com/vimwiki/utils/master/vwtags.py
+let g:tagbar_type_vimwiki = {
+          \   'ctagstype':'vimwiki'
+          \ , 'kinds':['h:header']
+          \ , 'sro':'&&&'
+          \ , 'kind2scope':{'h':'header'}
+          \ , 'sort':0
+          \ , 'ctagsbin':'~/.vim/bundle/vimwiki/utils/vwtags.py'
+          \ , 'ctagsargs': 'default'
+          \ }
+
+
 " The default setting of 'laststatus' is for the statusline to not appear
 " until a split is created. If you want it to appear all the time, set
 " laststatus to 2
@@ -60,7 +89,7 @@ let g:tagbar_single_click = 1
 " autocmd VimEnter * nested :call tagbar#autoopen(1)
 " autocmd FileType * nested :call tagbar#autoopen(0)
 " To open tagbar only for specified filetypes
-autocmd FileType c,cpp nested :TagbarOpen
+" autocmd FileType c,cpp nested :TagbarOpen
 let g:tagbar_width = 20
 " Display panel with y (or ,y)
 noremap <Leader>y :TagbarToggle<CR>
@@ -96,8 +125,8 @@ set term=xterm-256color
 "nnoremap <C-S-Right> :tabnext<CR>
 "nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 "nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
-" nnoremap <A-Left> :tabprevious<CR>
-" nnoremap <A-Left> :tabprevious<CR>
+nnoremap <A-Left> :tabprevious<CR>
+nnoremap <A-Right> :tabnext<CR>
 nnoremap <Leader><Left> :tabprevious<CR>
 nnoremap <Leader><Right> :tabnext<CR>
 
@@ -215,13 +244,8 @@ command! FZFMru call fzf#run({
 \  'options': '-m -x +s',
 \  'down':    '40%'})
 
-
-"""" Re-use tab when switching to another buffer
-" From http://vim.wikia.com/wiki/Using_tab_pages
+""""" Set switchbuffer behaviour
 set switchbuf=usetab,newtab
-" Doesn't seem to work with bufopen and buffer
-" Works with sbuffer - See
-" http://stackoverflow.com/questions/28392784/vim-drop-for-buffer-jump-to-window-if-buffer-is-already-open-with-tab-autoco
 
 """"" More natural splits
 set splitbelow
@@ -270,3 +294,13 @@ map <C-a> <Nop>
 
 """" Set color for selecting text
 hi Visual		guifg=#000000	guibg=#a6caf0	gui=NONE
+
+
+"""" Add Goyo and Limelight plugins for distraction-free writing in vim
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240

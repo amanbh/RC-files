@@ -41,7 +41,7 @@ TERM Eterm
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 NORMAL 00 # global default, although everything should be something.
 FILE 00 # normal file
-DIR 02;36 # directory
+DIR 01;36 # directory
 LINK 04;36 # symbolic link. (If you set this to 'target' instead of a
  # numerical value, the color is as for the file pointed to.)
 FIFO 40;33 # pipe
@@ -116,10 +116,10 @@ EXEC 01;32
 .py 01;33
 .hpp 00;33
 .h 00;33
-.pyc 05;33
-.swp 05;33
-.m~ 05;33
-.gitignore 05;33
+.pyc 00;33
+.swp 00;33
+.m~ 00;33
+.gitignore 00;33
 .json 01;35
 .csv 01;35
 .pkl 00;35
